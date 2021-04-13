@@ -35,7 +35,8 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Samkaveh\\User\\": "modules/Samkaveh/User/"
         },
         "classmap": [
             "database/seeds",

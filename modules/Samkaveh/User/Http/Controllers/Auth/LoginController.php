@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Samkaveh\User\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
@@ -43,8 +43,9 @@ class LoginController extends Controller
     public function credentials(Request $request)
     {
         $username = $request->get($this->username());
-        $field = filter_var('email',FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
-    
+
+        $field = filter_var($username, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+
         return [
             $field => $username,
             'password' => $request->password
@@ -52,6 +53,11 @@ class LoginController extends Controller
 
     }
 
+
+    public function showLoginForm()
+    {
+        return view('User::Front.auth.login');
+    }
 
 
 

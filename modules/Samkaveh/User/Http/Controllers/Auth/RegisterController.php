@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Samkaveh\User\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Rules\ValidMobile;
-use App\Rules\ValidPassword;
-use App\User;
+use Samkaveh\User\Rules\ValidMobile;
+use Samkaveh\User\Rules\ValidPassword;
+use Samkaveh\User\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -54,8 +54,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'mobile' => ['required', 'string', 'min:9', 'max:14', 'unique:users', new ValidMobile()],
-            'password' => ['required', 'string', 'min:8', 'confirmed', new ValidPassword()],
+            'mobile' => ['nullable', 'string', 'min:9' , 'max:14', 'unique:users', new ValidMobile()],
+            'password' => ['required', 'string', 'confirmed', new ValidPassword()],        
         ]);
     }
 
@@ -69,9 +69,16 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'mobile' => $data['mobile'],
             'email' => $data['email'],
+            'mobile' => $data['mobile'],
             'password' => Hash::make($data['password']),
         ]);
     }
+
+
+    public function showRegistrationForm()
+    {
+        return view('User::Front.auth.register');
+    }
+
 }

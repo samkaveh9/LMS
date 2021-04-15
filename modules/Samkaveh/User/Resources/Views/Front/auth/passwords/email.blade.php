@@ -1,8 +1,8 @@
 @extends('User::Front.auth.master')
 @section('content')
 
-<form action="{{ route('password.email') }}" class="form" method="POST">
-    @csrf
+<form action="{{ route('password.sendVerifyCodeEmail') }}" class="form" method="GET">
+
     <a class="account-logo" href="{{ route('home') }}">
         <img src="/img/weblogo.png" alt="">
     </a>

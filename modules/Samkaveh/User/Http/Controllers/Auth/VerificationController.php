@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
+use Samkaveh\User\Http\Requests\VerifyCodeRequest;
+use Samkaveh\User\Services\VerifyCodeService;
 
 class VerificationController extends Controller
 {
@@ -37,17 +39,23 @@ class VerificationController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 
     public function show(Request $request)
     {
         return $request->user()->hasVerifiedEmail()
-                        ? redirect($this->redirectPath())
-                        : view('User::Front.auth.verify');
+            ? redirect($this->redirectPath())
+            : view('User::Front.auth.verify');
     }
 
 
-
+    public function verify(VerifyCodeRequest $request)
+    {
+        if (! VerifyCodeService::check(auth()->id(), $request->verify_code)) {
+            return back()->withErrors(['verify_code' => 'کد معتبر نیست دوباره تلاش کنید']);
+        }
+        auth()->user()->markEmailAsVerified();
+        return redirect(route('home'));
+    }
 }

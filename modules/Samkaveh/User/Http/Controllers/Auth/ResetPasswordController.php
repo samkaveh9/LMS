@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
+use Samkaveh\User\Http\Requests\ChangePasswordRequest;
+use Samkaveh\User\Services\UserService;
 
 class ResetPasswordController extends Controller
 {
@@ -30,11 +32,15 @@ class ResetPasswordController extends Controller
     protected $redirectTo = RouteServiceProvider::HOME;
 
 
-    public function showResetForm(Request $request, $token = null)
+    public function showResetForm()
     {
-        return view('User::Front.auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
+        return view('User::Front.auth.passwords.reset');
     }
 
+    public function reset(ChangePasswordRequest $request)
+    {
+        UserService::changePassword(auth()->user(), $request->password);
+
+        return redirect(route('home'));
+    }
 }

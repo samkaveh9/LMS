@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-
+use Samkaveh\User\Mail\VerifyCodeMail;
 
 Route::get('/', function () {
     return view('index');

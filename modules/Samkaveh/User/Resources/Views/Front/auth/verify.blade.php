@@ -1,32 +1,43 @@
 @extends('User::Front.auth.master')
 @section('content')
 
-<form  method="POST" action="{{ route('verification.resend') }}" class="form">
+<form action="{{ route('verification.verify') }}" class="form" method="post">
     @csrf
-    <a class="account-logo" href="{{ route('home') }}">
+    <a class="account-logo" href="index.html">
         <img src="/img/weblogo.png" alt="">
     </a>
-    @if (session('resent'))
-    <div class="alert alert-success" role="alert">
-       لینک تایید ایمیل  به ایمیل شما ارسال شد
+    <div class="card-header">
+        <p class="activation-code-title">کد فرستاده شده به ایمیل  <span>Mohammadniko3@gmail.com</span>
+            را وارد کنید . ممکن است ایمیل به پوشه spam فرستاده شده باشد
+        </p>
     </div>
-    @endif
-    <div class="form-content form-account">
-        <p class="txt-l">
-         قبل از اقدام لطفا ایمیل خود را جهت تایید لینک چک کنید.
-        </p>
+    <div class="form-content form-content1">
+        <input name="verify_code" class="activation-code-input" placeholder="فعال سازی" required autofocus>
 
-        <p class="txt-l">
-            اگر لینکی برای شما ارسال نشد دوباره درخواست بدهید.
-        </p>
+        @error('verify_code')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
 
         <br>
-        <button type="submit" class="btn btn-recoverpass">درخواست مجدد</button>
+        <button class="btn i-t">تایید</button>
+        <a href="#" onclick="
+            event.preventDefault();
+            document.getElementById('resend-code').submit()
+        ">ارسال مجدد کد فعالسازی</a>
+
     </div>
     <div class="form-footer">
-        <a href="{{ route('home') }}" style="margin-right: 16px;">انصراف</a>
+        <a href="{{ route('home') }}">برگشت به صفحه اصلی</a>
     </div>
 </form>
 
+<form action="{{ route('verification.resend') }}" method="post" id="resend-code">@csrf</form>
+
 @endsection
 
+@push('scripts')
+<script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/activation-code.js"></script>
+@endpush

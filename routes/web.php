@@ -8,4 +8,3 @@ Route::get('/', function () {
 })->name('main');
 
 
-Route::get('/home', 'HomeController@index')->name('home');

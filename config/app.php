@@ -1,6 +1,7 @@
 <?php
 
 use samkaveh9\User\Providers\UserServiceProvider;
+use Samkaveh\Dashboard\Providers\DashboardServiceProvider;
 
 return [
 
@@ -163,7 +164,8 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        \Samkaveh\User\Providers\UserServiceProvider::class,
+        Samkaveh\User\Providers\UserServiceProvider::class,
+        Samkaveh\Dashboard\Providers\DashboardServiceProvider::class,
 
         /*
          * Package Service Providers...

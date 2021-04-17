@@ -401,6 +401,17 @@ textarea {
     cursor: pointer;
 }
 
+.btn-github {
+    background-color: #808a91 !important;
+    color: #fff;
+}
+
+.btn-github:hover {
+    background-color: #474c4e !important;
+    transition: background-color 200ms;
+}
+
+
 .btn-webamooz_net {
     background-color: #46b2f0 !important;
     color: #fff;

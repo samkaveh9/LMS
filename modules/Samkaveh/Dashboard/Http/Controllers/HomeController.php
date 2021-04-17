@@ -13,7 +13,7 @@ class HomeController extends Controller
         $this->middleware(['auth','verified']);
     }
 
-    public function home()
+    public function dashboard()
     {
         return view('Dashboard::index');
     }

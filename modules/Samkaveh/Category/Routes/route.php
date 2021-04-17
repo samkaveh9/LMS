@@ -5,12 +5,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(
     [
-        'namespace' => 'Samkaveh\Dashboard\Http\Controllers',
+        'namespace' => 'Samkaveh\Category\Http\Controllers',
         'prefix' => 'dashboard',
         'middleware' => ['web', 'auth', 'verified']
     ],
     function () {
 
-        Route::get('/', 'HomeController@dashboard')->name('dashboard');
+        Route::resource('categories','CategoryController');
     }
-);
+);  

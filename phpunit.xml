@@ -15,8 +15,13 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./modules/Samkaveh/User/Tests/Feature</directory>
         </testsuite>
+        
         <testsuite name="Unit">
             <directory suffix="Test.php">./modules/Samkaveh/User/Tests/Unit</directory>
+        </testsuite>
+
+        <testsuite name="Feature">
+            <directory suffix="Test.php">./modules/Samkaveh/Category/Tests/Feature</directory>
         </testsuite>
     </testsuites>
     <filter>

@@ -32,6 +32,7 @@
         <li class="item-li i-notification__management"><a href="notification-management.html">مدیریت اطلاع رسانی</a> 
         </li>
         <li class="item-li i-user__inforamtion"><a href="user-information.html">اطلاعات کاربری</a></li> --}}
+        {{-- <li class="item-li i-user__inforamtion"><a href="{{ route('role-permissions.index') }}">نقش های کاربری</a></li> --}}
     </ul>
 
 </div>

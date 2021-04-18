@@ -164,6 +164,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -181,6 +182,7 @@ return [
         Samkaveh\User\Providers\UserServiceProvider::class,
         Samkaveh\Dashboard\Providers\DashboardServiceProvider::class,
         Samkaveh\Category\Providers\CategoryServiceProvider::class,
+        Samkaveh\RolePermission\Providers\RolePermissionServiceProvider::class,
     ],
 
     /*

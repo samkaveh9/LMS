@@ -15,7 +15,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.0"
+        "laravel/ui": "^3.0",
+        "spatie/laravel-permission": "^4.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
@@ -39,7 +40,8 @@
             "App\\": "app/",
             "Samkaveh\\User\\": "modules/Samkaveh/User/",
             "Samkaveh\\Dashboard\\": "modules/Samkaveh/Dashboard/",
-            "Samkaveh\\Category\\": "modules/Samkaveh/Category/"
+            "Samkaveh\\Category\\": "modules/Samkaveh/Category/",
+            "Samkaveh\\RolePermission\\": "modules/Samkaveh/RolePermission/"
         },
         "classmap": [
             "database/seeds",

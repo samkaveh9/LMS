@@ -37,8 +37,7 @@
     </div>
     <div class="form-footer">
         <a href="{{ route('register') }}">صفحه ثبت نام</a>
-        {{-- <a href="{{ route('dashboard') }}" style="margin-right: 16px;">انصراف</a> --}}
-        <a href="#" style="margin-right: 16px;">انصراف</a>
+        <a href="{{ route('home') }}" style="margin-right: 16px;">انصراف</a>
     </div>
 </form>
 

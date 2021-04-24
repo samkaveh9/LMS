@@ -7,9 +7,14 @@
         <img src="/img/weblogo.png" alt="">
     </a>
     <div class="card-header">
-        <p class="activation-code-title">کد فرستاده شده به ایمیل  <span>Mohammadniko3@gmail.com</span>
+        <p class="activation-code-title">کد فرستاده شده به ایمیل  <span>{{  auth()->user()->email }}</span>
             را وارد کنید . ممکن است ایمیل به پوشه spam فرستاده شده باشد
+             <p class="activation-code-title">
+                اگر ایمیل شما درست نیست<a href="{{ route('users.updateProfile') }}">برای ویرایش اینجا کلیلک کنید</a>
+            </p>
         </p>
+
+
     </div>
     <div class="form-content form-content1">
         <input name="verify_code" class="activation-code-input" placeholder="فعال سازی" required autofocus>

@@ -127,7 +127,7 @@ a, span {
     height: 42px;
     line-height: 40px;
     border: solid 2px #e2e2e2;
-    margin-bottom: 15px;
+    margin-top: 15px;
     text-align: right;
     font-size: 13px !important;
 }
@@ -408,6 +408,16 @@ textarea {
 
 .btn-github:hover {
     background-color: #474c4e !important;
+    transition: background-color 200ms;
+}
+
+.btn-facebook {
+    background-color: #1f22d4 !important;
+    color: #fff;
+}
+
+.btn-facebook:hover {
+    background-color: #655bec !important;
     transition: background-color 200ms;
 }
 
@@ -1897,4 +1907,13 @@ span.tagRemove:hover {
 
 .is-invalid{
     border: 1px solid #cc2e2e;
+}
+
+.btn-link{
+    background: transparent;
+    cursor: pointer;
+}
+
+.removeRole:hover .item-delete {
+    display: inline-block;
 }

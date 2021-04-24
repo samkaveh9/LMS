@@ -13,7 +13,10 @@
                 </div>
             </div>
         </div>
-        <a href="" class="logout" title="خروج"></a>
+       <form action="{{ route('logout') }}" method="post">
+        @csrf
+        <button type="submit" class="logout" title="خروج" style="background: transparent; cursor: pointer;"></button>
+        </form>
     </div>
 </div>
 <div class="breadcrumb">

@@ -1,22 +1,14 @@
 <div class="sidebar__nav border-top border-left  ">
     <span class="bars d-none padding-0-18"></span>
     <a class="header__logo  d-none" href="https://webamooz.net"></a>
-    <div class="profile__info border cursor-pointer text-center">
-        <div class="avatar__img"><img src="/panel/img/pro.jpg" class="avatar___img">
-            <input type="file" accept="image/*" class="hidden avatar-img__input">
-            <div class="v-dialog__container" style="display: block;"></div>
-            <div class="box__camera default__avatar"></div>
-        </div>
-        <span class="profile__name">کاربر : محمد نیکو</span>
-    </div>
+    <x-user-photo-profile />
 
     <ul>
         @foreach (config('sidebar.items') as $item)
-            <li class="item-li {{ $item['icon'] }} {{ $item['url'] == request()->url() ? 'is-active' : '' }}"><a href="{{ $item['url'] }}">{{ $item['title'] }}</a></li>
+            <li class="item-li {{ $item['icon'] }} {{ str_starts_with(request()->url(),$item['url']) ? 'is-active' : '' }}"><a href="{{ $item['url'] }}">{{ $item['title'] }}</a></li>
         @endforeach
         {{-- <li class="item-li i-courses "><a href="courses.html">دوره ها</a></li>
         <li class="item-li i-users"><a href="users.html"> کاربران</a></li>
-        <li class="item-li i-categories"><a href="">دسته بندی ها</a></li>
         <li class="item-li i-slideshow"><a href="slideshow.html">اسلایدشو</a></li>
         <li class="item-li i-banners"><a href="banners.html">بنر ها</a></li>
         <li class="item-li i-articles"><a href="articles.html">مقالات</a></li>
@@ -30,9 +22,8 @@
         <li class="item-li i-my__purchases"><a href="mypurchases.html">خرید های من</a></li>
         <li class="item-li i-my__peyments"><a href="mypeyments.html">پرداخت های من</a></li>
         <li class="item-li i-notification__management"><a href="notification-management.html">مدیریت اطلاع رسانی</a> 
-        </li>
-        <li class="item-li i-user__inforamtion"><a href="user-information.html">اطلاعات کاربری</a></li> --}}
-        {{-- <li class="item-li i-user__inforamtion"><a href="{{ route('role-permissions.index') }}">نقش های کاربری</a></li> --}}
+        </li>--}}
+        <li class="item-li i-user__inforamtion"><a href="{{ route('users.profile') }}">اطلاعات کاربری</a></li> 
     </ul>
 
 </div>

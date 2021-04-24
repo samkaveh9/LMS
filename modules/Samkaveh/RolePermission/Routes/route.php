@@ -6,7 +6,7 @@ use Samkaveh\RolePermission\Http\Controllers\RolePermissionController;
 
 Route::group(
     [
-        'prefix' => 'dashboard',
+        'prefix' => 'panel',
         'middleware' => ['web', 'auth', 'verified']
     ],
     function () {

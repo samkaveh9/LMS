@@ -5,6 +5,7 @@ namespace Samkaveh\User\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Samkaveh\RolePermission\Models\Role;
 use Samkaveh\User\Notifications\ResetPasswordRequestNotification;
 use Samkaveh\User\Notifications\VerifyMailNotification;
 use Spatie\Permission\Traits\HasRoles;
@@ -12,6 +13,28 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasRoles;
+
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    const STATUS_BAN = 'ban';
+
+    public static $statuses = [
+        self::STATUS_ACTIVE,
+        self::STATUS_INACTIVE,
+        self::STATUS_BAN,
+    ];
+
+    public static $defualtUsers = [
+        [
+        'name' => 'Admin',
+        'email' => 'admin@admin.com',
+        'password' => 'demo',
+        'role' => Role::ROLE_ADMIN
+        ],
+    ];
+
+
+
 
     /**
      * The attributes that are mass assignable.

@@ -14,7 +14,7 @@
         <p class="box__title margin-bottom-15">انتخاب مجوز ها</p>
 
         @foreach ($permissions as $permission)
-        <label class="ui-checkbox">
+        <label class="ui-checkbox" style="margin-top: 16px">
             <input type="checkbox" class="sub-checkbox" name="permissions[{{ $permission->name }}]" data-id="1" value="{{ $permission->name }}"
                 {{ is_array(old('permissions')) && array_key_exists($permission->name, old('permissions')) ? 'checked' : ''  }}
                 >

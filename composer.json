@@ -13,9 +13,11 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "intervention/image": "^2.5",
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.0",
+        "morilog/jalali": "3.*",
         "spatie/laravel-permission": "^4.0"
     },
     "require-dev": {
@@ -39,9 +41,12 @@
         "psr-4": {
             "App\\": "app/",
             "Samkaveh\\User\\": "modules/Samkaveh/User/",
+            "Samkaveh\\Common\\": "modules/Samkaveh/Common/",
             "Samkaveh\\Dashboard\\": "modules/Samkaveh/Dashboard/",
             "Samkaveh\\Category\\": "modules/Samkaveh/Category/",
-            "Samkaveh\\RolePermission\\": "modules/Samkaveh/RolePermission/"
+            "Samkaveh\\RolePermission\\": "modules/Samkaveh/RolePermission/",
+            "Samkaveh\\Course\\": "modules/Samkaveh/Course/",
+            "Samkaveh\\Media\\": "modules/Samkaveh/Media/"
         },
         "classmap": [
             "database/seeds",

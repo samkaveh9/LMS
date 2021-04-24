@@ -1,0 +1,10 @@
+{
+    "free": "رایگان",
+    "cash": "نقدی",
+    "not-completed": "درحال برگزاری",
+    "completed": "تکمیل",
+    "locked": "قفل شده",
+    "accepted" : "تایید شد",
+    "rejected" : "رد شده",
+    "pending" : "درحال انتظار"
+}

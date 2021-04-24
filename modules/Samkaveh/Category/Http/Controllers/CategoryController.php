@@ -3,6 +3,7 @@
 namespace Samkaveh\Category\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use Samkaveh\Category\Repository\CategoryRepository;
 use Samkaveh\Category\Http\Requests\CategoryRequest;
 use Samkaveh\Category\Models\Category;
@@ -27,6 +28,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        Gate::authorize('view',Category::class);
         $categories = $this->repository->latest();
         return view('Category::index',compact('categories'));
     }

@@ -165,6 +165,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -179,10 +180,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        Samkaveh\RolePermission\Providers\RolePermissionServiceProvider::class,
         Samkaveh\User\Providers\UserServiceProvider::class,
         Samkaveh\Dashboard\Providers\DashboardServiceProvider::class,
         Samkaveh\Category\Providers\CategoryServiceProvider::class,
-        Samkaveh\RolePermission\Providers\RolePermissionServiceProvider::class,
+        Samkaveh\Course\Providers\CourseServiceProvider::class,
+        Samkaveh\Media\Providers\MediaServiceProvider::class,
     ],
 
     /*
@@ -234,6 +237,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

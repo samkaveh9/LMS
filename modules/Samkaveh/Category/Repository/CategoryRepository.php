@@ -7,7 +7,7 @@ use Samkaveh\Category\Models\Category;
 class CategoryRepository
 {
 
-    public function all()
+    public static function all()
     {
         return Category::all();
     }

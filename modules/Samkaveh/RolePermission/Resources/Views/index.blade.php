@@ -31,7 +31,7 @@
                                 @method('DELETE')
                                 <a href="{{ route('role-permissions.edit',$role->id) }}" class="item-edit mlg-15" title="ویرایش"></a>
                                 <a href="" target="_blank" class="item-eye mlg-15" title="مشاهده"></a>
-                                <button type="submit" class="item-delete" title="حذف" style="background: transparent;cursor: pointer;"></button>                            
+                                <button type="submit" class="item-delete btn-link" title="حذف"></button>                            
                             </form>                                
                         </td>
                     </tr>

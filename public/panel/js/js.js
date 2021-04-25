@@ -242,8 +242,13 @@ function updateConfirmationStatus(event, route, message, status, field = 'confir
     event.preventDefault();
     if(confirm(message)){
         $.post(route, { _method: "PUT", _token: $('meta[name="_token"]').attr('content') })
-            .done((response) => {
-                $(event.target).closest('tr').find('td.' + field).text(status);
+            .done(function (response) {
+                if (status = "تایید شده") {
+                    $(event.target).closest('tr').find('td.' + field).html("<span class='text-success'>" + status + "</span>");
+                }else{
+                    $(event.target).closest('tr').find('td.' + field).html("<span class='text-error'>" + status + "</span>");
+                }
+
                 $.toast({
                     heading: 'عملیات موفق',
                     text: response.message,
@@ -251,7 +256,7 @@ function updateConfirmationStatus(event, route, message, status, field = 'confir
                     icon: 'success'
                 })
             })
-            .fail((response) => {
+            .fail(function (response) {
                 $.toast({
                     heading: 'عملیات ناموفق',
                     text: response.message,

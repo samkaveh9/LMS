@@ -129,7 +129,7 @@ class CourseController extends Controller
     public function reject(Course $course, CourseRepository $repository)
     {
         if ($repository->updateConfirmationStatus($course, Course::CONFIRMATION_STATUS_REJECTED));
-        return back()->with(AjaxResponse::SuccessResponse());
+            return back()->with(AjaxResponse::SuccessResponse());
 
         return back()->with(AjaxResponse::FailResponse());
     }

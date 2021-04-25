@@ -28,10 +28,11 @@ class CreateCoursesTable extends Migration
             $table->enum('status', Course::$statuses);
             $table->enum('confirmation_status', Course::$confirmation_status)->default(Course::CONFIRMATION_STATUS_PENDING);
             $table->text('body')->nullable();
+            $table->timestamps();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('SET NULL');
             $table->foreign('teacher_id')->references('id')->on('users')->onDelete('CASCADE');
             $table->foreign('banner_id')->references('id')->on('media')->onDelete('SET NULL');
-            $table->timestamps();
+            
         });
     }
 

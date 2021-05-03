@@ -27,4 +27,10 @@ class UserPolicy
         }
     }
 
+
+    public function userProfile()
+    {
+        return auth()->check() ? true : false;
+    }
+
 }

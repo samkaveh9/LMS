@@ -9,17 +9,16 @@ use Samkaveh\User\Repositories\UserRepository;
 class ValidTeacher implements Rule
 {
 
-
     public function passes($attribute, $value)
     {
-        $user = resolve(UserRepository::class)->findById($value);
-        return $user->hasPermissionTo(Permission::PERMISSION_TEACH);
+       $user = resolve(UserRepository::class)->findById($value);
+       return $user->hasPermissionTo(Permission::PERMISSION_TEACH);
     }
 
     public function message()
     {
-        return 'کاربر انتخابی یک مدرس معتبر نمی باشد';
-    }  
+        return "کاربر انتخاب شده یک مدرس معتبر نیست.";
+    }
  
 }
 

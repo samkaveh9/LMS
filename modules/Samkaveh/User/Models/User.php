@@ -3,16 +3,20 @@
 namespace Samkaveh\User\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Samkaveh\Course\Models\Course;
 use Samkaveh\RolePermission\Models\Role;
 use Samkaveh\User\Notifications\ResetPasswordRequestNotification;
 use Samkaveh\User\Notifications\VerifyMailNotification;
 use Spatie\Permission\Traits\HasRoles;
+use Samkaveh\Course\Models\Season;
+use Samkaveh\Media\Models\Media;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles;
 
     const STATUS_ACTIVE = 'active';
     const STATUS_INACTIVE = 'inactive';
@@ -32,24 +36,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'role' => Role::ROLE_ADMIN
         ],
     ];
-
-
-
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    
     protected $fillable = [
         'name', 'email', 'password', 'mobile'
     ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
     protected $hidden = [
         'password', 'remember_token',
     ];
@@ -63,6 +54,33 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    public function image()
+    {
+        return $this->belongsTo(Media::class,'image_id');
+    }  
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class,'teacher_id');
+    }  
+
+    public function seasons()
+    {
+        return $this->hasMany(Season::class);
+    } 
+    
+    public function episodes()
+    {
+        return $this->hasMany(Episode::class);
+    }
+
+    public function getThumbAttribute()
+    {
+        if ($this->image) 
+            return '/storage/' .  $this->image->files[300];
+
+        return '/panel/img/pro.jpg';  
+    }
 
     public function sendEmailVerificationNotification()
     {
@@ -74,6 +92,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $this->notify(new ResetPasswordRequestNotification());
     }
-
 
 }

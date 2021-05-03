@@ -34,11 +34,13 @@ class Media extends Model
 
     public function getThumbAttribute()
     {
-                return '/storage/' .  $this->files[300];
+        return '/storage/' .  $this->files[300];
     }
 
-
-
+    public function episodes()
+    {
+        return $this->hasMany(Episode::class);
+    }
 
 }
 

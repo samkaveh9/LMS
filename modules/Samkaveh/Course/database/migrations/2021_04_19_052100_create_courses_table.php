@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id')->nullable();
             $table->unsignedBigInteger('teacher_id');
-            $table->unsignedBigInteger('banner_id');
+            $table->unsignedBigInteger('banner_id')->nullable();
             $table->string('title');
             $table->string('slug');
             $table->float('priority')->nullable();

@@ -14,7 +14,6 @@
             </span>
             @enderror
     
-    
             <p class="box__title margin-bottom-15">انتخاب مجوز ها</p>
     
             @foreach ($permissions as $permission)
@@ -42,6 +41,6 @@
 @endsection
 
 @push('breadcrumb')
-<li><a href="#" title="نقش کاربری ها">ویرایش نقش کاربری {{ $role->name }}</a></li>
+<li><a href="{{ route('role-permissions.index') }}" title="نقش های کاربری">نقش های کاربری</a></li> <li><a href="#" title="نقش کاربری ها">ویرایش نقش کاربری {{ $role->name }}</a></li>
 @endpush
 

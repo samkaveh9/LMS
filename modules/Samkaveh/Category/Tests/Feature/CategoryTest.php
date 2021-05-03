@@ -1,11 +1,11 @@
 <?php
 
-namespace Samkaveh\Category\Feature\Tests;
+namespace Samkaveh\Category\Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Samkaveh\Category\Models\Category;
-use Samkaveh\Course\Database\Seeds\RolePermissionSeeder;
+use Samkaveh\RolePermission\Database\Seeds\RolePermissionSeeder;
 use Samkaveh\RolePermission\Models\Permission;
 use Samkaveh\User\Models\User;
 use Tests\TestCase;
@@ -32,23 +32,17 @@ class CategoryTest extends TestCase
     public function test_authenticated_user_holder_permission_categories_can_see_categories_index_page()
     {   
 
-            $this->actingAs($this->newUser());
-            // $this->newUser()->assertOk();
-    //    $this->seed(RolePermissionSeeder::class);
-    //    auth()->user()->givePermissionTo('manage categories');
-    //    $this->get(route('categories.index'))->assertStatus(200);
-
+        $this->actionAsAdmin();
         // $this->newUser();
-        // $this->assertAuthenticated();
-        
+        // $this->withoutMiddleware(['auth','web']);
         $this->get(route('categories.index'))->assertOk();
-
+        
     }
 
 
     public function test_authenticated_user_can_see_categories_index_page()
     {
-       $this->actingAs(factory(User::class)->craete());
+       $this->actingAs(User::factory()->make());
        $this->seed(RolePermissionSeeder::class);
        auth()->user()->givePermissionTo('manage categories');
        $this->get(route('categories.index'))->assertStatus(200);
@@ -66,9 +60,11 @@ class CategoryTest extends TestCase
         $this->assertEquals(1,Category::all());
     }
 
-
-
-
-
+    private function actionAsAdmin()
+    {
+        $this->actingAs(User::factory()->create());
+        $this->seed(RolePermissionSeeder::class);
+        auth()->user()->givePermissionTo(Permission::PERMISSION_MANAGE_CATEGORIES);
+    }
 
 }

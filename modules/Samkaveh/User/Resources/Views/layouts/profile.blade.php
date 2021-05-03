@@ -5,7 +5,7 @@
         <form action="{{ route('users.updateProfile') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="profile__info border cursor-pointer text-center">
-                <div class="avatar__img"><img src="/img/pro.jpg" class="avatar___img">
+                <div class="avatar__img"><img src="{{ auth()->user()->thumb }}" class="avatar___img">
                     <input type="file" accept="image/*" class="hidden avatar-img__input">
                     <div class="v-dialog__container" style="display: block;"></div>
                     <div class="box__camera default__avatar"></div>
@@ -20,7 +20,7 @@
             <input name="username" class="text text-left" placeholder="نام کاربری و آدرس پروفایل" value="{{ auth()->user()->username }}">
             <input name="headline" class="text text-left" placeholder="عنوان" value="{{ auth()->user()->headline }}">
             <p class="input-help text-left margin-bottom-12" dir="ltr">
-                https://webamooz.net/tutors/
+                #/tutors/
                 <a href="https//webamooz/tutors/Mohammadnikoo">MohammadNikoo</a>
             </p>
             <input name="password" class="text text-left" placeholder="رمز عبور">
@@ -40,3 +40,7 @@
 
 </div>
 @endsection
+
+@push('breadcrumb')
+<li><a href="{{ route('users.profile') }}" title="اطلاعات کاربری">اطلاعات کاربری</a></li>
+@endpush

@@ -4,7 +4,7 @@ namespace Samkaveh\Category\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-
+use Samkaveh\Course\Models\Course;
 
 class Category extends Model
 {
@@ -53,5 +53,9 @@ class Category extends Model
         return $this->belongsTo(Category::class,'parent_id');
     }
     
+    public function courses()
+    {
+        return $this->hasMany(Course::class);
+    }
     
 }

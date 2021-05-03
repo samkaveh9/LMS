@@ -23,6 +23,6 @@
 @endsection
 
 @push('breadcrumb')
-<li><a href="#" title="دسته بندی ها">ویرایش دسته بندی {{ $category->title }}</a></li>
+<li><a href="{{ route('categories.index') }}" title="دسته بندی ها">دسته بندی ها</a></li> <li><a href="#" title="ویرایش دسته بندی">ویرایش دسته بندی {{ $category->title }}</a></li>
 @endpush
 

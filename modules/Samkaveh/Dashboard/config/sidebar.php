@@ -7,8 +7,9 @@ return [
         "dashboard" => [],
         "categories" => [],
         "courses" => [],
-        "role-permissions" => [],
         "users" => [],
+        "role-permissions" => [],
+        "user__inforamtion" => [],
 
     ]
 

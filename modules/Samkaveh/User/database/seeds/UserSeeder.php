@@ -16,12 +16,10 @@ class UserSeeder extends Seeder
                     'email' => $user['email']
                 ],
                 [
-
                     'name' => $user['name'],
                     'email' => $user['email'],
                     'password' => bcrypt($user['password']),
                     'email_verified_at' => now(),
-
                 ]
             )->assignRole($user['role']);
         }

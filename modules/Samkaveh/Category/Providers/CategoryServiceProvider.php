@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Samkaveh\Category\Models\Category;
 use Samkaveh\Category\Policies\CategoryPolicy;
+use Samkaveh\RolePermission\Models\Permission;
 
 class CategoryServiceProvider extends ServiceProvider
 {
@@ -25,7 +26,8 @@ class CategoryServiceProvider extends ServiceProvider
         config()->set('sidebar.items.categories',[
             "icon" => "i-categories",
             "url" => route('categories.index'),
-            "title" => "دسته بندی ها"
+            "title" => "دسته بندی ها",
+            "permission" => Permission::PERMISSION_MANAGE_CATEGORIES
         ]);
         
     }

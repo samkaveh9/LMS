@@ -46,32 +46,5 @@
 @push('scripts')
 
 <script src="/js/jquery.toast.min.js"></script>
-
-<script>
-
-function deleteItem(event, route){
-
-    if(confirm('آیا از حذف این آیتم اطمینان دارید؟'))
-    {
-        $.post(route, { _method: "delete", _token: "{{ csrf_token() }}"})
-        
-        .done(function (response) {
-                event.target.closest('tr').remove();
-                $.toast({
-                    heading: 'عملیات موفق',
-                    text: response.message,
-                    showHideTransition: 'slide',
-                    icon: 'success'
-                })
-            })
-
-        .fail()
-    }
-}
-
-
-</script>
-
-
 @endpush
 

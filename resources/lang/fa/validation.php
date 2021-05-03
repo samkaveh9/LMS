@@ -157,5 +157,7 @@ return array(
         'teacher_id' => 'مدرس',
         'type' => 'نوع',
         'status' => 'وضعیت',
+        'episode_file' => 'فایل جلسه',
+        'season_id' => 'سر فصل',
     ),
 );

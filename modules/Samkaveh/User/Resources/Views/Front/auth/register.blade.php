@@ -25,7 +25,7 @@
         @enderror
 
         <input type="text" name="mobile" class="txt txt-l @error('mobile') is-invalid @enderror"
-        placeholder="شماره موبایل (بدون صفر)"  autocomplete="mobile">
+        placeholder="شماره موبایل (بدون صفر)" value="{{ old('mobile') }}"  autocomplete="mobile">
         @error('mobile')
         <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>

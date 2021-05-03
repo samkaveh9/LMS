@@ -119,7 +119,8 @@ class UserController extends Controller
 
     public function profilePhoto(Request $request)
     {
-        $media = MediaUploadService::upload($request->file('photo'));
+        $this->authorize('userProfile',User::class);
+        $media = MediaUploadService::publicUpload($request->file('photo'));
         if(auth()->user()->image) auth()->user()->image->delete();
         auth()->user()->image_id = $media->id;
         auth()->user()->save();
@@ -128,15 +129,15 @@ class UserController extends Controller
 
     public function profile()
     {
+        $this->authorize('userProfile',User::class);
         return view('User::layouts.profile');
     }
 
     public function updateProfile(Request $request)
     {
+        $this->authorize('userProfile',User::class);
         $this->repository->updateProfile($request);
-        // newFeedback();
         return back();
-
     }
 
 

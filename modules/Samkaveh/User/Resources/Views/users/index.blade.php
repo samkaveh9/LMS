@@ -6,14 +6,16 @@
         <div class="table__box">
             <table class="table">
                 <thead role="rowgroup">
-                <tr role="row" class="title-row">
+                <tr role="row" class="title-row">                   
                     <th>شناسه</th>
-                    <th>نام کاربر</th>
+                    <th>نام و نام خانوادگی</th>
                     <th>ایمیل</th>
-                    <th>وضعیت تایید ایمیل</th>
-                    <th>IP</th>
+                    <th>شماره موبایل</th>
                     <th>سطح کاربری</th>
                     <th>تاریخ عضویت</th>
+                    <th>ای پی</th>
+                    <th>درحال یادگیری</th>
+                    <th>وضعیت حساب</th>
                     <th>عملیات</th>
                 </tr>
                 </thead>
@@ -22,22 +24,22 @@
                     <tr role="row" class="">
                         <td>{{  $user->id }}</td>
                         <td><a href="">{{  $user->name }}</a></td>
-                        <td>{{  $user->email }}</td>
-                        <td class="confirmation_status">{{  $user->hasVerifiedEmail() ? 'تایید شده' : 'تایید نشده' }}</td>
-                        <td>127.0.0.1</td>
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->mobile }}</td>
                         <td>
-                        @foreach ($user->roles as $role)
                             <ul>
+                                @foreach ($user->roles as $role)
                                 <li class="removeRole">
                                    @lang($role->name)
-                                   <a href="" onclick="deleteItem(event,'{{ route('users.removeRole', ['user' => $user->id, 'role' => $role->name ]) }}', 'li')" class="item-delete mlg-15 d-none" title="حذف"></a> 
                                 </li>
-                        @endforeach
+                                @endforeach
                             </ul>
                         </td>
-
                         <td>{{ \Morilog\Jalali\Jalalian::fromCarbon(\Carbon\Carbon::parse($user->created_at)) }}</td>
-
+                        <td>{{ $user->ip }}</td>
+                        <td>5 دوره</td>
+                        <td class="confirmation_status">{{  $user->hasVerifiedEmail() ? 'تایید شده' : 'تایید نشده' }}</td>
+                        
                          <td>    
                                 <a href="#open-modal" onclick="setFormAction({{ $user->id }})" class="item-edit mlg-15" title="انتصاب نقش کاربری"></a>
                                 <a href="" onclick="updateConfirmationStatus(event,'{{ route('users.manualVerify', $user->id) }}', 'آیا از تایید این آیتم اطمینان دارید', 'تایید شده')" class="item-confirm mlg-15" title="تایید"></a>
@@ -85,7 +87,6 @@
     function setFormAction(userId) {
         $("#add-role").attr('action', '{{ route('users.addRole', 0) }}'.replace('/0/', '/' + userId + '/' ))
     }
-
 
 </script>
 

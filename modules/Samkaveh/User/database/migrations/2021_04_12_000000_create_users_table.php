@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Samkaveh\RolePermission\Models\Role;
 use Samkaveh\User\Models\User;
 
 class CreateUsersTable extends Migration
@@ -16,6 +17,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('role_id')->default(Role::ROLE_USER);
             $table->string('name');
             $table->string('email')->unique();
             $table->string('username',50)->nullable();
@@ -23,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('headline')->nullable();
             $table->text('bio')->nullable();
             $table->string('ip')->nullable();
-            $table->bigInteger("image_id")->unsigned()->nullable();
+            $table->unsignedBigInteger("image_id")->nullable();
             $table->string('card_number', 16)->nullable();
             $table->string('shaba', 24)->nullable();
             $table->string('telegram')->nullable();          
@@ -33,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('image_id')->references('id')->on('media')->onDelete('SET NULL');
+            $table->foreign('role_id')->references('id')->on('roles');
         });
     }
 

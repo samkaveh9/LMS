@@ -10,11 +10,11 @@
           content="وبسایت آموزش برنامه نویسی وب و موبایل ، جاوااسکریپت ، لاراول ، react ، آموزش node js با مجرب ترین مدرسین">
     <meta name="keywords"
           content="آموزش طراحی سایت,آموزش برنامه نویسی,طراحی وب,ساخت وب سایت,آموزش git,آموزش لاراول,آموزش php,آموزش react,آموزش پی اچ پی,آموزش laravel,آموزش جاوا اسکریپت,آموزش ساخت وب سایت,آموزش mvc,آموزش React Native,, وب اموز">
-    <link rel="canonical" href="https://webamooz.net"/>
+    <link rel="canonical" href="#"/>
     <meta property="og:title" content="آموزش برنامه‌ نویسی و طراحی وب"/>
     <meta property="og:description"
           content="وبسایت آموزش برنامه نویسی وب و موبایل ، جاوااسکریپت ، لاراول ، react ، آموزش node js با مجرب ترین مدرسین"/>
-    <meta property="og:url" content="https://webamooz.net"/>
+    <meta property="og:url" content="#"/>
     <meta property="og:site_name" content="وبسایت آموزشی"/>
     <meta property="og:brand" content="وبسایت آموزشی"/>
     <meta property="og:locale" content="fa"/>
@@ -148,24 +148,28 @@
                 <div class="join-teachers">
                     <a href="become-a-teacher.html">تدریس</a>
                 </div>
-<!--                                <div class="user-menu-account">-->
-<!--                                    <div class="user-image">-->
-<!--                                        <img src="/img/profile.jpg" alt="desction">-->
-<!--                                    </div>-->
-<!--                                    <span>پروفایل کاربری من </span>-->
-<!--                                    <div class="user-menu-account-dropdown">-->
-<!--                                        <ul>-->
-<!--                                            <li><a href="">مشاهده پروفایل</a></li>-->
-<!--                                            <li><a href="">خرید های من</a></li>-->
-<!--                                            <li><a href="">داشبورد</a></li>-->
-<!--                                            <li><a href="">خروج</a></li>-->
-<!--                                        </ul>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                @auth
+                <div class="user-menu-account">
+                         <div class="user-image">
+                             <img src="/img/profile.jpg" alt="desction">
+                         </div>
+                         <span>پروفایل کاربری من </span>
+                         <div class="user-menu-account-dropdown">
+                             <ul>
+                                 <li><a href="">مشاهده پروفایل</a></li>
+                                 <li><a href="">خرید های من</a></li>
+                                 <li><a href="{{ route('dashboard') }}">داشبورد</a></li>
+                                 <li><a href="">خروج</a></li>
+                             </ul>
+                         </div>
+                     </div>
+                @else   
                 <div class="login-register-btn ">
                     <div><a class="btn-login" href="{{ route('login') }}">ورود</a></div>
                     <div><a class="btn-register" href="{{ route('register') }}">ثبت نام</a></div>
                 </div>
+                @endauth                              
+             
 
             </div>
         </div>
@@ -635,7 +639,7 @@
     <article class="container blog">
         <div class="b-head">
             <h2>آخرین مقالات</h2>
-            <a href="https://webamooz.net/blog">مشاهده همه</a>
+            <a href="#/blog">مشاهده همه</a>
         </div>
         <div class="articles">
             <div class="col">

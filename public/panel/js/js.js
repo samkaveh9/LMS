@@ -139,46 +139,47 @@ $('.checkedAll').on('click', function (e) {
         $(".sub-checkbox").prop('checked', false);
     }
 });
+function acceptAllLessons(route) {
+    if (confirm("آیا از تایید همه جلسات این دوره اطمینان دارید؟")) {
+        $("<form action='"+ route +"' method='post'>" +
+            "<input type='hidden' name='_token' value='"+ $('meta[name="_token"]').attr('content') +"' /> "+
+            "<input type='hidden' name='_method' value='put'> " +
+            "</form>").appendTo('body').submit();
+    }
+}
+function acceptMultiple(route) {
+    doMultipleAction(route, "آیا مطمئن هستید که می خواهید این سطرها را تایید کنید؟",'put')
+}
+function rejectMultiple(route) {
+    doMultipleAction(route, "آیا مطمئن هستید که می خواهید این سطرها را رد کنید؟",'put')
+}
 
-jQuery('.delete-btn').on('click', function (e) {
+function deleteMultiple(route) {
+    doMultipleAction(route,"آیا مطمئن هستید که می خواهید این سطرها را حذف کنید؟" ,"delete")
+}
+function doMultipleAction(route,message, method){
+    var allVals = getSelectedItems();
+    if (allVals.length <= 0) {
+        alert("یک سطر انتخاب کنید");
+    } else {
+        WRN_PROFILE_DELETE = message;
+        var check = confirm(WRN_PROFILE_DELETE);
+        if (check == true) {
+            $("<form action='"+ route +"' method='post'>" +
+                "<input type='hidden' name='_token' value='"+ $('meta[name="_token"]').attr('content') +"' /> "+
+                "<input type='hidden' name='_method' value='"+ method +"'> " +
+                "<input type='hidden' name='ids' value='" + allVals + "'>" +
+                "</form>").appendTo('body').submit();
+        }
+    }
+}
+function getSelectedItems() {
     var allVals = [];
     $(".sub-checkbox:checked").each(function () {
         allVals.push($(this).attr('data-id'));
     });
-    //alert(allVals.length); return false;
-    if (allVals.length <= 0) {
-        alert("یک سطر انتخاب کنید");
-    } else {
-        //$("#loading").show();
-        WRN_PROFILE_DELETE = "آیا مطمئن هستید که می خواهید این سطر را حذف کنید؟";
-        var check = confirm(WRN_PROFILE_DELETE);
-        if (check == true) {
-            //for server side
-            /*
-            var join_selected_values = allVals.join(",");
-
-            $.ajax({
-
-                type: "POST",
-                url: "delete.php",
-                cache:false,
-                data: 'ids='+join_selected_values,
-                success: function(response)
-                {
-                    $("#loading").hide();
-                    $("#msgdiv").html(response);
-                    //referesh table
-                }
-            });*/
-            //for client side
-            $.each(allVals, function (index, value) {
-                $('table tr').filter("[data-row-id='" + value + "']").remove();
-            });
-
-
-        }
-    }
-});
+    return allVals;
+}
 
 $('.course__detial .item-delete').on('click', function (e) {
     WRN_PROFILE_DELETE = "آیا مطمئن هستید که می خواهید این سطر را حذف کنید؟";
@@ -211,44 +212,41 @@ $('.discounts #discounts-field-2').on('click', function (e) {
 $('.discounts #discounts-field-1').on('click', function (e) {
     $('.discounts .dropdown-select').removeClass('is-active')
 });
-
-
-function deleteItem(event, route, element='tr') {
-    event.preventDefault();
-    if (confirm('آیا از حذف این آیتم اطمینان دارید?')) {
-        $.post(route, {_method: 'DELETE', _token: $('meta[name="_token"]').attr('content')})
-        .done((response) => {
-            event.target.closest(element).remove()
-            $.toast({
-                heading: 'عملیات موفق',
-                text: response.message,
-                showHideTransition: 'slide',
-                icon: 'success'
-            })
-        })
-        .fail((response) => {
-            $.toast({
-                heading: 'عملیات ناموفق',
-                text: response.message,
-                showHideTransition: 'slide',
-                icon: 'error'
-            })
-        })
-    }
-}
-
-
 function updateConfirmationStatus(event, route, message, status, field = 'confirmation_status') {
     event.preventDefault();
     if(confirm(message)){
-        $.post(route, { _method: "PUT", _token: $('meta[name="_token"]').attr('content') })
+        $.post(route, { _method: "put", _token: $('meta[name="_token"]').attr('content') })
             .done(function (response) {
-                if (status = "تایید شده") {
+                $(event.target).closest('tr').find('td.' + field).text(status);
+                if (status == "تایید شده") {
                     $(event.target).closest('tr').find('td.' + field).html("<span class='text-success'>" + status + "</span>");
                 }else{
                     $(event.target).closest('tr').find('td.' + field).html("<span class='text-error'>" + status + "</span>");
                 }
 
+                $.toast({
+                    heading: 'عملیات موفق',
+                    text: response.message,
+                    showHideTransition: 'slide',
+                    icon: 'success'
+                })
+            })
+            .fail(function (response) {
+                $.toast({
+                    heading: 'عملیات ناموفق',
+                    text: response.message,
+                    showHideTransition: 'slide',
+                    icon: 'error'
+                })
+            })
+    }
+}
+function deleteItem(event, route, element = 'tr') {
+    event.preventDefault();
+    if(confirm('آیا از حذف این آیتم اطمینان دارید؟')){
+        $.post(route, { _method: "delete", _token: $('meta[name="_token"]').attr('content') })
+            .done(function (response) {
+                event.target.closest(element).remove();
                 $.toast({
                     heading: 'عملیات موفق',
                     text: response.message,

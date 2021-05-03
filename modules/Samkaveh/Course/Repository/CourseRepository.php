@@ -12,20 +12,26 @@ class CourseRepository
         return Course::all();
     }
 
-    public function latest()
-    {
-        return Course::latest()->get();
-    }
-
     public function paginate()
     {
         return Course::latest()->paginate(15);
     }
 
+    public function approvedCourse()
+    {
+        return Course::where('confirmation_status', Course::CONFIRMATION_STATUS_ACCEPTED)->latest()->paginate(15);
+    }
+
+    public function unapprovedCourse()
+    {
+        return Course::where('confirmation_status', Course::CONFIRMATION_STATUS_REJECTED)->latest()->paginate(15);
+    }
+
     public function store($values)
     {
         return Course::create($values->only(
-            'category_id','banner_id','teacher_id','title','slug','priority','price','percent','type','status','body'
+            'category_id','banner_id','teacher_id','title','slug',
+            'priority','price','percent','type','status','body'
         ));
     }
 
@@ -46,6 +52,10 @@ class CourseRepository
         return Course::findOrFail($id);
     }
 
+    public function getCoursesByTeacherId($id)
+    {
+        return Course::where('teacher_id', $id)->get();
+    }
 
     public function updateConfirmationStatus(Course $course, string $status)
     {

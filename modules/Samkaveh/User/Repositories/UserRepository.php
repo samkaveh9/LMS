@@ -37,8 +37,8 @@ class UserRepository
         }
 
         if (auth()->user()->hasPermissionTo(Permission::PERMISSION_TEACH)) {
-            // auth()->user()->card_number = $request->card_number;
-            // auth()->user()->shaba = $request->shaba;
+            auth()->user()->card_number = $request->card_number;
+            auth()->user()->shaba = $request->shaba;
             auth()->user()->headline = $request->headline;
             auth()->user()->bio = $request->bio;
             auth()->user()->username = $request->username;

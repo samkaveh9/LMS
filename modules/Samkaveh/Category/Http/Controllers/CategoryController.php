@@ -3,11 +3,10 @@
 namespace Samkaveh\Category\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Gate;
 use Samkaveh\Category\Repository\CategoryRepository;
 use Samkaveh\Category\Http\Requests\CategoryRequest;
 use Samkaveh\Category\Models\Category;
-use Samkaveh\Category\Responses\AjaxResponse;
+use Samkaveh\Common\Responses\AjaxResponse;
 
 class CategoryController extends Controller
 {
@@ -28,7 +27,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        Gate::authorize('view',Category::class);
+        $this->authorize('view',Category::class);
         $categories = $this->repository->latest();
         return view('Category::index',compact('categories'));
     }
@@ -40,6 +39,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('view',Category::class);
         return view('Category::create');
     }
 
@@ -51,6 +51,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
+        $this->authorize('view',Category::class);
         $this->repository->store($request);
         return back();
     }
@@ -74,6 +75,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        $this->authorize('view',Category::class);
         return view('Category::edit',compact('category'));
     }
 
@@ -86,6 +88,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
+        $this->authorize('view',Category::class);
         $this->repository->update($category ,$request);
         return redirect(route('categories.index'));
     }
@@ -98,6 +101,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $this->authorize('view',Category::class);
         $this->repository->destory($category);
         AjaxResponse::SuccessResponse();
     }

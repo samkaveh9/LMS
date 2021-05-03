@@ -20,6 +20,7 @@ class CreateMediaTable extends Migration
             $table->json('files');
             $table->enum('type',Media::$types);
             $table->string('filename',255);
+            $table->boolean('is_private')->default(0);
             $table->timestamps();
         });
     }

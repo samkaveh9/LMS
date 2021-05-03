@@ -8,8 +8,9 @@ use Samkaveh\Common\Responses\AjaxResponse;
 use Samkaveh\Course\Repository\CourseRepository;
 use Samkaveh\Course\Http\Requests\CourseRequest;
 use Samkaveh\Course\Models\Course;
-use Samkaveh\Media\Services\ImageUploadService;
+use Samkaveh\Course\Models\Episode;
 use Samkaveh\Media\Services\MediaUploadService;
+use Samkaveh\RolePermission\Models\Permission;
 use Samkaveh\User\Repositories\UserRepository;
 
 class CourseController extends Controller
@@ -31,11 +32,42 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $this->authorize('view',Course::class);
-        $courses = $this->repository->paginate();
+        $this->authorize('index',Course::class);
+        if (auth()->user()->hasPermissionTo(Permission::PERMISSION_MANAGE_COURSES) ||
+            auth()->user()->hasPermissionTo(Permission::PERMISSION_ADMIN)) {
+            $courses = $this->repository->paginate();
+        }else{
+            $courses = $this->repository->getCoursesByTeacherId(auth()->id());
+        }
         return view('Course::index', compact('courses'));
     }
 
+
+    public function approvedCourse()
+    {
+        $this->authorize('index',Course::class);
+        if (auth()->user()->hasPermissionTo(Permission::PERMISSION_MANAGE_COURSES) ||
+            auth()->user()->hasPermissionTo(Permission::PERMISSION_ADMIN)) {
+            $courses = $this->repository->approvedCourse();
+        }else{
+            $courses = $this->repository->getCoursesByTeacherId(auth()->id());
+        }
+        return view('Course::approved', compact('courses'));
+    }
+
+    public function unapprovedCourse()
+    {
+        $this->authorize('index',Course::class);
+        if (auth()->user()->hasPermissionTo(Permission::PERMISSION_MANAGE_COURSES) ||
+            auth()->user()->hasPermissionTo(Permission::PERMISSION_ADMIN)) {
+            $courses = $this->repository->unapprovedCourse();
+        }else{
+            $courses = $this->repository->getCoursesByTeacherId(auth()->id());
+        }
+        return view('Course::unapproved', compact('courses'));
+    }
+
+        
     /**
      * Show the form for creating a new resource.
      *
@@ -43,6 +75,7 @@ class CourseController extends Controller
      */
     public function create(UserRepository $userRepository, CategoryRepository $categoryRepository)
     {
+        $this->authorize('create',Course::class);
         $teachers = $userRepository->getTeachers();
         $categories = $categoryRepository->all();
         return view('Course::create', compact('teachers', 'categories'));
@@ -56,7 +89,7 @@ class CourseController extends Controller
      */
     public function store(CourseRequest $request)
     {
-        $request->request->add(['banner_id' => MediaUploadService::upload($request->file('banner'))->id]);
+        $request->request->add(['banner_id' => MediaUploadService::publicUpload($request->file('banner'))->id]);
         $this->repository->store($request);
         return redirect(route('courses.index'));
     }
@@ -80,6 +113,7 @@ class CourseController extends Controller
      */
     public function edit(Course $course, UserRepository $userRepository, CategoryRepository $categoryRepository)
     {
+        $this->authorize('edit',$course);
         $teachers = $userRepository->getTeachers();
         $categories = $categoryRepository->all();
         return view('Course::edit', compact('course', 'teachers', 'categories'));
@@ -92,16 +126,17 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(CourseRequest $request, Course $course, CourseRepository $repository)
-    {
+    public function update(CourseRequest $request, Course $course, CourseRepository $courseRepository)
+    { 
+        $this->authorize('update',Course::class);
         if ($request->hasFile('banner')) {
-            $request->request->add(['banner_id' => MediaUploadService::upload($request->file('banner'))->id]);
-            ImageUploadService::delete($course, $repository);
-        } else {
-
+            $request->request->add(['banner_id' => MediaUploadService::publicUpload($request->file('banner'))->id ]);
+            if ($course->banner)
+                $course->banner->delete();
+        }else{
             $request->request->add(['banner_id' => $course->banner_id]);
         }
-        $repository->update($course, $request);
+        $courseRepository->update($course, $request);
         return redirect(route('courses.index'));
     }
 
@@ -111,35 +146,48 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Course $course, CourseRepository $repository)
+    public function destroy(Course $course)
     {
-        ImageUploadService::delete($course, $repository);
+        $this->authorize('delete',Course::class);
+        if ($course->banner) {
+            $course->banner->delete();
+        }
         $course->delete();
+        AjaxResponse::SuccessResponse();
         return back();
     }
 
-    public function accept(Course $course, CourseRepository $repository)
+    public function accept(Course $course)
     {
-        if ($repository->updateConfirmationStatus($course, Course::CONFIRMATION_STATUS_ACCEPTED));
-        return back()->with(AjaxResponse::SuccessResponse());
+        $this->authorize('change_confirmation_status',Course::class);   
+        if ($this->repository->updateConfirmationStatus($course, Course::CONFIRMATION_STATUS_ACCEPTED))
+            return AjaxResponse::SuccessResponse();
 
-        return back()->with(AjaxResponse::FailResponse());
+        return AjaxResponse::FailResponse();
     }
 
-    public function reject(Course $course, CourseRepository $repository)
+    public function reject(Course $course)
     {
-        if ($repository->updateConfirmationStatus($course, Course::CONFIRMATION_STATUS_REJECTED));
-            return back()->with(AjaxResponse::SuccessResponse());
+        $this->authorize('change_confirmation_status',Course::class);
+        if ($this->repository->updateConfirmationStatus($course, Course::CONFIRMATION_STATUS_REJECTED))
+            return AjaxResponse::SuccessResponse();
 
-        return back()->with(AjaxResponse::FailResponse());
+        return AjaxResponse::FailResponse();
     }
 
 
-    public function lock(Course $course, CourseRepository $repository)
+    public function lock(Course $course)
     {
-        if ($repository->updateStatus($course, Course::STATUS_LOCKED));
-            return back()->with(AjaxResponse::SuccessResponse());
+        $this->authorize('change_confirmation_status',Course::class);
+        if ($this->repository->updateStatus($course, Course::STATUS_LOCKED))
+            return AjaxResponse::SuccessResponse();
 
-        return back()->with(AjaxResponse::FailResponse());
+        return AjaxResponse::FailResponse();
+    }
+
+    public function detail(Course $course, Episode $episode)
+    {
+        $this->authorize('details', $course);
+        return view('Course::detail',compact('course'));
     }
 }

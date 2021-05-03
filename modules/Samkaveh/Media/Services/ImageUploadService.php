@@ -2,53 +2,39 @@
 
 namespace Samkaveh\Media\Services;
 
-use Carbon\Carbon;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Samkaveh\Media\Contracts\MediaFileContract;
+use Samkaveh\Media\Models\Media;
 
-class ImageUploadService 
+class ImageUploadService extends DefaultUploadService implements MediaFileContract
 {
+    protected static $sizes = ['300', '600'];
 
-    protected static $sizes = ["300" , "600"];
-
-    public static function upload($file)
+    public static function upload(UploadedFile $file,$filename, $dir) :array
     {
-        $filename = uniqid();
-        $dir =  'app\public\\';
-        $extension = strtolower($file->getClientOriginalExtension());
-        $file->move(storage_path($dir) , $filename . '.' . $extension);
-        $path = $dir . '\\' . $filename . '.' . $extension;
-
-        return self::resize(storage_path($path) , $dir ,$filename , $extension);
+        Storage::putFileAs( $dir , $file, $filename . '.' . $file->getClientOriginalExtension());
+        $path = $dir . $filename .  '.' . $file->getClientOriginalExtension();
+        return self::resize(Storage::path($path), $dir, $filename, $file->getClientOriginalExtension());
     }
 
-
-    private static function resize($image,$dir,$filename,$extension)
+    private static function resize($img, $dir, $filename, $extension)
     {
-        $img = Image::make($image);
-        $imgs['original'] = $filename . '.' . $extension;
+        $img = Image::make($img);
+        $imgs['original'] =  $filename . '.' . $extension;
         foreach (self::$sizes as $size) {
-            $imgs[$size] = $filename . '_' . "$size" . '.' . $extension;
-            $img->resize($size,null, function($aspect){
+            $imgs[$size] = $filename . '_'. $size. '.' . $extension;
+            $img->resize($size, null, function ($aspect) {
                 $aspect->aspectRatio();
-            })->save(storage_path($dir) . $filename . '_' . "$size" . '.' . $extension);
+            })->save(Storage::path($dir) . $filename . '_'. $size. '.' . $extension);
         }
         return $imgs;
     }
 
-
-    public static function delete($item,$repository)
+    public static function thumb(Media $media)
     {
-        $dir =  'app\public\\';
-        
-        $repository->findById($item->id);
-
-        if ($item->banner) {
-            foreach ($item->banner->files as $file) {
-                unlink(storage_path($dir . $file)); 
-            }
-        }
-
+        return "/storage/" . $media->files['300'];
     }
 
 

@@ -6,20 +6,20 @@
             <form action="{{ route('courses.store') }}" method="POST" class="padding-30" enctype="multipart/form-data">
                 @csrf
                 <x-input type="text" name="title" placeholder="عنوان دوره" required />
-
+    
                 <div class="d-flex multi-text">
                     <x-input type="text" name="priority" class="text-left mlg-15" placeholder="ردیف دوره" required />
                     <x-input type="text" name="price" placeholder="مبلغ دوره" class="text-left mlg-15" required />
                     <x-input type="text" name="percent" placeholder="درصد مدرس" class="text-left" required />
                 </div>
-
+    
                 <x-select name="teacher_id" required>
                     <option value="">انتخاب مدرس دوره</option>
                     @foreach ($teachers as $teacher)
                     <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
                     @endforeach
                 </x-select>
-
+    
                 <ul class="tags">
                     <li class="tagAdd taglist">
                         <x-input type="text" name="tags" id="search-field" class="mt-0" placeholder="برچسب ها" />
@@ -32,14 +32,14 @@
                     <option value="{{ $type }}">@lang($type)</option>
                     @endforeach
                 </x-select>
-
+    
                 <x-select name="status" required>
                     <option value="">وضعیت دوره</option>
                     @foreach (\Samkaveh\Course\Models\Course::$statuses as $status)
                     <option value="{{ $status }}">@lang($status)</option>
                     @endforeach
                 </x-select>
-
+    
                 <x-select name="category_id" required>
                     <option value="">دسته بندی</option>
                     @foreach (\Samkaveh\Category\Repository\CategoryRepository::all() as $category)
@@ -48,7 +48,7 @@
                 </x-select>
                 
                 <x-file-upload name="banner" placeholder="آپلود بنر دوره" />
-
+    
                 <x-textarea name="body" placeholder="توضیحات دوره" />
                 
                 <button type="submit" class="btn btn-webamooz_net">ایجاد دوره</button>

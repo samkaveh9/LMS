@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Samkaveh\Media\Models\Media;
 use Samkaveh\User\Models\User;
+use Samkaveh\Course\Models\Season;
 
 class Course extends Model
 {
@@ -55,6 +56,14 @@ class Course extends Model
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
-    
 
+    public function seasons()
+    {
+        return $this->hasMany(Season::class);
+    }    
+
+    public function episodes()
+    {
+        return $this->hasMany(Episode::class);
+    }
 }

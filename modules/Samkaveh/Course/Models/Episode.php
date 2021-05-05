@@ -5,6 +5,7 @@ namespace Samkaveh\Course\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 use Samkaveh\Media\Models\Media;
 
 class Episode extends Model
@@ -62,4 +63,13 @@ class Episode extends Model
         return $this->belongsTo(Media::class);
     }
 
+    public function path()
+    {   
+        return $this->course->path() . '?episode=' . $this->id . '-' . $this->slug;
+    }
+
+    public function downloadLink()
+    {   
+        return URL::temporarySignedRoute('media.download',now()->addDay(), ['media' => $this->media_id]);
+    }
 }

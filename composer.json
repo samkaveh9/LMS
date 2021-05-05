@@ -18,6 +18,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.0",
         "morilog/jalali": "3.*",
+        "samkaveh/front": "dev-master",
         "spatie/laravel-permission": "^4.0"
     },
     "require-dev": {
@@ -27,6 +28,12 @@
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.0"
     },
+    "repositories":[
+        {
+            "type": "path",
+            "url": "modules/Samkaveh/Front"
+        }
+    ],
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",

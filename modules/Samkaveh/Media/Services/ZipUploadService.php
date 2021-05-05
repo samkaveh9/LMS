@@ -9,10 +9,15 @@ use Samkaveh\Media\Models\Media;
 
 class ZipUploadService extends DefaultUploadService implements MediaFileContract
 {
-    public static function upload(UploadedFile $file, $filename, $dir): array
+    public static function upload(UploadedFile $file, $filename, $dir) :array
     {
-        Storage::putFileAs($dir, $file, $filename . '.' . $file->getClientOriginalExtension());
+        Storage::putFileAs( $dir , $file, $filename . '.' . $file->getClientOriginalExtension());
         return ["zip" => $filename .  '.' . $file->getClientOriginalExtension()];
+    }
+
+    public static function getFilename()
+    {
+        return (static::$media->is_private ? 'private/' : 'public/') . static::$media->files['zip'];
     }
 
     public static function thumb(Media $media)

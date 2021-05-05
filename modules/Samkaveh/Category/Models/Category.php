@@ -57,5 +57,10 @@ class Category extends Model
     {
         return $this->hasMany(Course::class);
     }
-    
+
+    public function path()
+    {
+        return route('categories.show',$this->slug);
+    }
+
 }

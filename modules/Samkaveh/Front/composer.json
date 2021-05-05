@@ -1,0 +1,16 @@
+{
+    "name": "samkaveh/front",
+    "autoload": {
+        "psr-4": {
+            "Samkaveh\\Front\\": "src"
+        }
+    },
+
+    "extra": {
+        "laravel":{
+            "providers":[
+                "Samkaveh\\Front\\Providers\\FrontServiceProvider"
+            ]
+        }
+    }
+}

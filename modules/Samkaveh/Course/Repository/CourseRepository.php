@@ -12,6 +12,11 @@ class CourseRepository
         return Course::all();
     }
 
+    public function latest()
+    {
+        return Course::where('confirmation_status', Course::CONFIRMATION_STATUS_ACCEPTED)->latest()->take(8)->get();
+    }
+
     public function paginate()
     {
         return Course::latest()->paginate(15);
@@ -66,6 +71,11 @@ class CourseRepository
     public function updateStatus(Course $course, string $status)
     {
         return $course->update(['status' => $status]);
+    }
+
+    public function getTimeForamt(Course $course)
+    {
+        return $course->where('confirmation_status', Course::CONFIRMATION_STATUS_ACCEPTED)->sum('time');  
     }
     
 }

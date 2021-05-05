@@ -14,4 +14,6 @@ interface MediaFileContract
 
     public static function thumb(Media $media);
 
+    public static function stream(Media $media);
+
 }

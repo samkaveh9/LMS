@@ -62,7 +62,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function courses()
     {
         return $this->hasMany(Course::class,'teacher_id');
-    }  
+    } 
+    
+    public function purchases()
+    {
+        return $this->belongsToMany(Course::class, 'course_user', 'user_id', 'course_id');
+    }
 
     public function seasons()
     {
@@ -91,6 +96,17 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendResetPasswordRequestNotification()
     {
         $this->notify(new ResetPasswordRequestNotification());
+    }
+
+    public function hasAccessToCourse(Course $course)
+    {
+        if ($this->can('manage', Course::class) || 
+            $this->id === $course->teacher_id || 
+            $course->students->contains($this->id)) {
+            
+            return true;
+        }
+        return false;
     }
 
 }

@@ -28,7 +28,7 @@ Route::group([
   $router->post('login', 'LoginController@login');
 
   // Logout
-  $router->post('logout', 'LoginController@logout')->name('logout');
+  $router->any('logout', 'LoginController@logout')->name('logout');
 
   //Register
   $router->get('register', 'RegisterController@showRegistrationForm')->name('register');

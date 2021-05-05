@@ -31,15 +31,16 @@ class ImageUploadService extends DefaultUploadService implements MediaFileContra
         }
         return $imgs;
     }
+    public static function getFilename()
+    {
+        return (static::$media->is_private ? 'private/' : 'public/') . static::$media->files['original'];
+    }
+
 
     public static function thumb(Media $media)
     {
         return "/storage/" . $media->files['300'];
     }
-
-
-
-
 
 }
 

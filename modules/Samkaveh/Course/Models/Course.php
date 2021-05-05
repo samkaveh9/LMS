@@ -5,9 +5,11 @@ namespace Samkaveh\Course\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Samkaveh\Category\Models\Category;
 use Samkaveh\Media\Models\Media;
 use Samkaveh\User\Models\User;
 use Samkaveh\Course\Models\Season;
+use Samkaveh\Course\Repository\CourseRepository;
 
 class Course extends Model
 {
@@ -52,9 +54,24 @@ class Course extends Model
         return $this->belongsTo(Media::class,'banner_id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Category::class,'category_id');
+    }
+
+    // public function parentCategory()
+    // {
+    //     return $this->belongsTo(Category::class,'parent_id');
+    // }
+
     public function teacher()
     {
         return $this->belongsTo(User::class, 'teacher_id');
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_user','course_id','user_id');
     }
 
     public function seasons()
@@ -66,4 +83,10 @@ class Course extends Model
     {
         return $this->hasMany(Episode::class);
     }
+
+    public function path()
+    {
+        return route('front.single',$this->slug);
+    }
+
 }

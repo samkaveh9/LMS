@@ -31,4 +31,9 @@ class CategoryRepository
     {
         return $item->delete();
     }
+
+    public function treeGruph()
+    {
+        return Category::where('parent_id', null)->with('subCategories')->get();
+    }
 }

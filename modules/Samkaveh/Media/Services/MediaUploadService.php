@@ -47,6 +47,15 @@ class MediaUploadService
         }
     }
 
+    public static function stream(Media $media)
+    {
+        foreach (config('MediaFile.MediaTypes') as $type => $service) {
+            if ($media->type == $type) {
+                return $service['handler']::stream($media);
+            }
+        }
+    }
+
     private static function normalizeExtension($file): string
     {
         return strtolower($file->getClientOriginalExtension());
